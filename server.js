@@ -16,12 +16,26 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
+});
 
-app.get("*", (req, res) =>
-{res.send("<h1>hello world</h1>")
+app.get("/exercise", (req, res) => {
+  res.sendfile(__dirname + "/public/exercise.html");
+});
 
+app.get("/stats", (req, res) => {
+  db.Workout.find({})
+  .populate("exercises")
+  .then(workout => {
+      res.json(workout);
+      res.sendfile(__dirname + "/public/stats.html");
+    
+  })
 })
+  
+
+
 app.listen(PORT, () => {
-    console.log(`App running on port ${PORT}!`);
-  });
+  console.log(`App running on port ${PORT}!`);
+});
