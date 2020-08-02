@@ -25,15 +25,36 @@ app.get("/exercise", (req, res) => {
 });
 
 app.get("/stats", (req, res) => {
-  db.Workout.find({})
-  .populate("exercises")
-  .then(workout => {
-      res.json(workout);
-      res.sendfile(__dirname + "/public/stats.html");
+    res.sendfile(__dirname + "/public/stats.html");
+   
     
-  })
-})
   
+})
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+    .populate("exercises")
+    .then(dbWorkouts => {
+        console.log(dbWorkouts)
+        res.json(dbWorkouts);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+})
+app.get("/api/workouts", (req, res) => {
+    db.Workout.find({})
+      .then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+
+
+
+
 
 
 app.listen(PORT, () => {
