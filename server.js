@@ -36,7 +36,7 @@ app.get("/stats", (req, res) => {
 
   
 })
-
+ 
 
   //api routes
 app.get("/api/workouts/range", (req, res) => {
@@ -51,7 +51,9 @@ app.get("/api/workouts/range", (req, res) => {
 })
 
 
-
+app.get("/api/workouts", (req,res) => {
+    db.Workout.find().sort({ day: 1}).then((workouts)=> res.json(workouts));
+})
 
 app.post("/api/workouts", (req, res) => {
     db.Workout.create(req.body, (err, data)=>{
