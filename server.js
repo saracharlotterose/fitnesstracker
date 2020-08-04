@@ -4,7 +4,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 4000;
-
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout";
 const db = require("./models");
 
 
